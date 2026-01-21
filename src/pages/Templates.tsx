@@ -3,52 +3,39 @@ import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, Check } from 'lucide-react';
+import { templates, TemplateInfo } from '@/components/templates';
+import { fieldCategories } from '@/types/resume';
 
-const templates = [
-  {
-    id: 'professional',
-    name: 'Professional',
-    description: 'Clean and traditional design perfect for corporate roles',
-    fields: ['Finance', 'Legal', 'Business'],
-    popular: true,
-  },
-  {
-    id: 'modern',
-    name: 'Modern',
-    description: 'Contemporary layout with a creative touch',
-    fields: ['Technology', 'Marketing', 'Design'],
-    popular: true,
-  },
-  {
-    id: 'minimal',
-    name: 'Minimal',
-    description: 'Simple and elegant for maximum readability',
-    fields: ['All Industries'],
-    popular: false,
-  },
-  {
-    id: 'executive',
-    name: 'Executive',
-    description: 'Sophisticated design for senior leadership roles',
-    fields: ['C-Suite', 'Director', 'VP'],
-    popular: false,
-  },
-  {
-    id: 'academic',
-    name: 'Academic CV',
-    description: 'Comprehensive format for research and academia',
-    fields: ['Education', 'Research', 'Science'],
-    popular: false,
-  },
-  {
-    id: 'creative',
-    name: 'Creative',
-    description: 'Bold design for creative professionals',
-    fields: ['Design', 'Art', 'Media'],
-    popular: false,
-  },
-];
+const TemplatePreview = ({ template }: { template: TemplateInfo }) => (
+  <div className="aspect-[3/4] bg-secondary/50 relative overflow-hidden">
+    <div className="absolute inset-3 bg-white rounded-lg shadow-sm overflow-hidden">
+      {/* Header preview */}
+      <div className={`h-12 ${template.preview.headerColor}`}></div>
+      <div className="p-3">
+        <div className="h-2 w-16 bg-gray-800 rounded mb-2" />
+        <div className="h-1.5 w-12 bg-gray-300 rounded mb-3" />
+        <div className="space-y-1.5">
+          <div className="h-1.5 w-full bg-gray-200 rounded" />
+          <div className="h-1.5 w-4/5 bg-gray-200 rounded" />
+          <div className="h-1.5 w-3/4 bg-gray-200 rounded" />
+        </div>
+        <div className="h-1.5 w-10 bg-gray-700 rounded mt-3 mb-1.5" />
+        <div className="space-y-1">
+          <div className="h-1.5 w-full bg-gray-200 rounded" />
+          <div className="h-1.5 w-5/6 bg-gray-200 rounded" />
+        </div>
+      </div>
+    </div>
+    
+    {template.popular && (
+      <Badge className="absolute top-3 right-3 bg-warning text-warning-foreground">
+        <Star className="w-3 h-3 mr-1 fill-current" />
+        Popular
+      </Badge>
+    )}
+  </div>
+);
 
 const Templates = () => {
   return (
@@ -60,67 +47,94 @@ const Templates = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4">Resume Templates</h1>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Choose from our collection of ATS-friendly templates designed for every industry
+              {templates.length} ATS-optimized templates designed for every industry
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Template Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {templates.map((template) => (
               <Card key={template.id} className="group overflow-hidden hover:shadow-xl transition-all">
-                <div className="aspect-[3/4] bg-secondary/50 relative">
-                  {/* Template Preview Placeholder */}
-                  <div className="absolute inset-4 bg-white rounded-lg shadow-sm p-4">
-                    <div className="h-3 w-20 bg-gray-800 rounded mb-3" />
-                    <div className="h-2 w-16 bg-gray-300 rounded mb-4" />
-                    <div className="space-y-2">
-                      <div className="h-2 w-full bg-gray-200 rounded" />
-                      <div className="h-2 w-4/5 bg-gray-200 rounded" />
-                      <div className="h-2 w-3/4 bg-gray-200 rounded" />
-                    </div>
-                    <div className="h-2 w-12 bg-gray-700 rounded mt-4 mb-2" />
-                    <div className="space-y-2">
-                      <div className="h-2 w-full bg-gray-200 rounded" />
-                      <div className="h-2 w-5/6 bg-gray-200 rounded" />
-                    </div>
-                  </div>
-                  
-                  {template.popular && (
-                    <Badge className="absolute top-4 right-4 bg-warning text-warning-foreground">
-                      <Star className="w-3 h-3 mr-1 fill-current" />
-                      Popular
-                    </Badge>
-                  )}
+                <TemplatePreview template={template} />
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Link to="/builder">
-                      <Button variant="secondary" size="lg">
-                        Use This Template
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </Link>
-                  </div>
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Link to="/builder" state={{ templateId: template.id }}>
+                    <Button variant="secondary" size="lg">
+                      Use This Template
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </Link>
                 </div>
                 
                 <div className="p-6">
                   <h3 className="font-semibold text-lg mb-2">{template.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{template.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {template.fields.map((field) => (
-                      <Badge key={field} variant="secondary" className="text-xs">
-                        {field}
+                    {template.fields.slice(0, 3).map((fieldValue) => {
+                      const field = fieldCategories.find(f => f.value === fieldValue);
+                      return field ? (
+                        <Badge key={fieldValue} variant="secondary" className="text-xs">
+                          {field.icon} {field.label}
+                        </Badge>
+                      ) : null;
+                    })}
+                    {template.fields.length > 3 && (
+                      <Badge variant="secondary" className="text-xs">
+                        +{template.fields.length - 3} more
                       </Badge>
-                    ))}
+                    )}
                   </div>
                 </div>
               </Card>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-muted-foreground mb-4">
-              All templates are ATS-optimized and customizable
-            </p>
+          {/* Industry Section */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold text-center mb-8">Templates by Industry</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+              {fieldCategories.map((field) => {
+                const fieldTemplates = templates.filter(t => t.fields.includes(field.value));
+                return (
+                  <Card key={field.value} className="p-4 text-center hover:shadow-md transition-shadow">
+                    <span className="text-3xl">{field.icon}</span>
+                    <h3 className="font-semibold mt-2">{field.label}</h3>
+                    <p className="text-sm text-muted-foreground">{fieldTemplates.length} templates</p>
+                    <Link to="/builder" state={{ field: field.value }}>
+                      <Button variant="ghost" size="sm" className="mt-2">
+                        View All <ArrowRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    </Link>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Features */}
+          <section className="bg-secondary/30 rounded-2xl p-8 mb-16">
+            <h2 className="text-2xl font-bold text-center mb-6">All Templates Include</h2>
+            <div className="grid md:grid-cols-4 gap-4">
+              {[
+                'ATS-Optimized Format',
+                'Easy Customization',
+                'Professional Typography',
+                'PDF Export',
+                'Section Reordering',
+                'Color Customization',
+                'Mobile Responsive',
+                'Print Ready',
+              ].map((feature) => (
+                <div key={feature} className="flex items-center gap-2 text-sm">
+                  <Check className="w-4 h-4 text-success" />
+                  {feature}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <div className="text-center">
             <Link to="/builder">
               <Button variant="gradient" size="lg">
                 Start Building Your Resume

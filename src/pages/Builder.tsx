@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useResume } from '@/context/ResumeContext';
 import Header from '@/components/Header';
 import StepIndicator from '@/components/StepIndicator';
@@ -9,9 +9,12 @@ import ExperienceForm from '@/components/forms/ExperienceForm';
 import EducationForm from '@/components/forms/EducationForm';
 import SkillsForm from '@/components/forms/SkillsForm';
 import ProjectsForm from '@/components/forms/ProjectsForm';
-import ResumePreview from '@/components/ResumePreview';
+import { templates, getTemplatesForField, getRecommendedTemplate } from '@/components/templates';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Eye, EyeOff, Download } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ChevronLeft, ChevronRight, Eye, EyeOff, Download, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
@@ -27,6 +30,21 @@ const steps = [
 const Builder = () => {
   const { resumeData, updateResumeData, currentStep, setCurrentStep } = useResume();
   const [showPreview, setShowPreview] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+
+  // Get templates for the selected field
+  const availableTemplates = useMemo(() => 
+    getTemplatesForField(resumeData.fieldCategory),
+    [resumeData.fieldCategory]
+  );
+
+  // Get current template - default to recommended for field
+  const currentTemplate = useMemo(() => {
+    if (selectedTemplateId) {
+      return templates.find(t => t.id === selectedTemplateId) || getRecommendedTemplate(resumeData.fieldCategory);
+    }
+    return getRecommendedTemplate(resumeData.fieldCategory);
+  }, [selectedTemplateId, resumeData.fieldCategory]);
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -44,6 +62,8 @@ const Builder = () => {
     window.print();
   };
 
+  const TemplateComponent = currentTemplate.component;
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -57,7 +77,12 @@ const Builder = () => {
         return (
           <FieldSelector
             selected={resumeData.fieldCategory}
-            onSelect={(field) => updateResumeData({ fieldCategory: field })}
+            onSelect={(field) => {
+              updateResumeData({ fieldCategory: field });
+              // Auto-select recommended template for field
+              const recommended = getRecommendedTemplate(field);
+              setSelectedTemplateId(recommended.id);
+            }}
           />
         );
       case 3:
@@ -72,18 +97,50 @@ const Builder = () => {
         return <ProjectsForm />;
       case 8:
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Preview & Export</h2>
-              <p className="text-muted-foreground">Review your resume and download when ready</p>
+              <p className="text-muted-foreground">Choose your template and download when ready</p>
             </div>
-            <div className="flex justify-center gap-4">
+
+            {/* Template Selector */}
+            <div className="max-w-4xl mx-auto">
+              <h3 className="font-medium mb-4">Choose Template Style</h3>
+              <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-8">
+                {availableTemplates.map((template) => (
+                  <button
+                    key={template.id}
+                    onClick={() => setSelectedTemplateId(template.id)}
+                    className={cn(
+                      "relative p-3 rounded-xl border-2 text-center transition-all",
+                      selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id)
+                        ? "border-primary bg-primary/5"
+                        : "border-border hover:border-primary/50"
+                    )}
+                  >
+                    {(selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id)) && (
+                      <div className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="w-3 h-3 text-primary-foreground" />
+                      </div>
+                    )}
+                    <div className={`h-8 w-full rounded ${template.preview.headerColor} mb-2`}></div>
+                    <span className="text-xs font-medium">{template.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-4 mb-8">
               <Button variant="gradient" size="lg" onClick={handlePrint}>
                 <Download className="w-5 h-5 mr-2" />
                 Download PDF
               </Button>
             </div>
-            <ResumePreview />
+
+            {/* Resume Preview */}
+            <div className="print:block">
+              <TemplateComponent data={resumeData} />
+            </div>
           </div>
         );
       default:
@@ -118,9 +175,12 @@ const Builder = () => {
             {showPreview && currentStep !== 8 && (
               <div className="hidden lg:block w-1/2 animate-slide-up">
                 <div className="sticky top-24">
-                  <h3 className="text-lg font-medium mb-4">Live Preview</h3>
-                  <div className="transform scale-75 origin-top-left">
-                    <ResumePreview />
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-medium">Live Preview</h3>
+                    <Badge variant="secondary">{currentTemplate.name}</Badge>
+                  </div>
+                  <div className="transform scale-[0.6] origin-top-left" style={{ width: '166.67%' }}>
+                    <TemplateComponent data={resumeData} />
                   </div>
                 </div>
               </div>
@@ -184,10 +244,10 @@ const Builder = () => {
           body * {
             visibility: hidden;
           }
-          .bg-white, .bg-white * {
+          .print\\:block, .print\\:block * {
             visibility: visible;
           }
-          .bg-white {
+          .print\\:block {
             position: absolute;
             left: 0;
             top: 0;
