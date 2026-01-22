@@ -3,6 +3,7 @@ import { ResumeData, defaultResumeData } from '@/types/resume';
 
 interface ResumeContextType {
   resumeData: ResumeData;
+  setResumeData: (data: ResumeData) => void;
   updateResumeData: (data: Partial<ResumeData>) => void;
   updatePersonalInfo: (info: Partial<ResumeData['personalInfo']>) => void;
   addExperience: (experience: ResumeData['experiences'][0]) => void;
@@ -27,6 +28,10 @@ const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData);
   const [currentStep, setCurrentStep] = useState(1);
+
+  const setResumeDataSafe = (data: ResumeData) => {
+    setResumeData(data);
+  };
 
   const updateResumeData = (data: Partial<ResumeData>) => {
     setResumeData((prev) => ({ ...prev, ...data }));
@@ -136,6 +141,7 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     <ResumeContext.Provider
       value={{
         resumeData,
+        setResumeData: setResumeDataSafe,
         updateResumeData,
         updatePersonalInfo,
         addExperience,

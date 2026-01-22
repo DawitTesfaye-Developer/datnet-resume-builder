@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useResume } from '@/context/ResumeContext';
 import Header from '@/components/Header';
 import StepIndicator from '@/components/StepIndicator';
@@ -15,6 +15,10 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, ChevronRight, Eye, EyeOff, Download, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { Link, useSearchParams } from 'react-router-dom';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
@@ -28,9 +32,13 @@ const steps = [
 ];
 
 const Builder = () => {
-  const { resumeData, updateResumeData, currentStep, setCurrentStep } = useResume();
+  const { resumeData, updateResumeData, setResumeData, currentStep, setCurrentStep } = useResume();
   const [showPreview, setShowPreview] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+  const [activeResumeId, setActiveResumeId] = useState<string | null>(null);
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [searchParams] = useSearchParams();
 
   // Get templates for the selected field
   const availableTemplates = useMemo(() => 
@@ -46,6 +54,31 @@ const Builder = () => {
     return getRecommendedTemplate(resumeData.fieldCategory);
   }, [selectedTemplateId, resumeData.fieldCategory]);
 
+  // Load an existing saved resume (if opened from "My Resumes")
+  useEffect(() => {
+    const resumeId = searchParams.get('resumeId');
+    if (!resumeId || resumeId === activeResumeId) return;
+
+    const run = async () => {
+      const { data, error } = await supabase
+        .from('resumes')
+        .select('id,data,template_id')
+        .eq('id', resumeId)
+        .single();
+      if (error) {
+        toast({ title: 'Failed to load resume', description: error.message, variant: 'destructive' });
+        return;
+      }
+      setActiveResumeId(data.id);
+      setResumeData(data.data as unknown as any);
+      if (data.template_id) setSelectedTemplateId(data.template_id);
+      setCurrentStep(3);
+    };
+
+    run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeResumeId, searchParams, setCurrentStep, setResumeData, toast]);
+
   const handleNext = () => {
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
@@ -60,6 +93,41 @@ const Builder = () => {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleSaveToCloud = async () => {
+    if (!user) return;
+
+    const title = window.prompt('Name this resume:', resumeData.personalInfo.fullName ? `${resumeData.personalInfo.fullName} Resume` : 'Untitled');
+    if (!title) return;
+
+    const payload = {
+      user_id: user.id,
+      title,
+      document_type: resumeData.documentType,
+      field_category: resumeData.fieldCategory,
+      template_id: currentTemplate.id,
+      data: resumeData as unknown as any,
+    };
+
+    try {
+      if (activeResumeId) {
+        const { error } = await supabase.from('resumes').update(payload as any).eq('id', activeResumeId);
+        if (error) throw error;
+        toast({ title: 'Saved', description: 'Your resume was updated.' });
+      } else {
+        const { data, error } = await supabase
+          .from('resumes')
+          .insert([payload as any])
+          .select('id')
+          .single();
+        if (error) throw error;
+        setActiveResumeId(data.id);
+        toast({ title: 'Saved', description: 'Your resume is now available on all devices.' });
+      }
+    } catch (e: any) {
+      toast({ title: 'Save failed', description: e?.message ?? 'Please try again', variant: 'destructive' });
+    }
   };
 
   const TemplateComponent = currentTemplate.component;
@@ -130,11 +198,26 @@ const Builder = () => {
               </div>
             </div>
 
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
               <Button variant="gradient" size="lg" onClick={handlePrint}>
                 <Download className="w-5 h-5 mr-2" />
                 Download PDF
               </Button>
+
+              {user ? (
+                <>
+                  <Button variant="success" size="lg" onClick={handleSaveToCloud}>
+                    Save to Cloud
+                  </Button>
+                  <Link to="/my-resumes">
+                    <Button variant="outline" size="lg">My Resumes</Button>
+                  </Link>
+                </>
+              ) : (
+                <Link to="/auth" state={{ from: '/builder' }}>
+                  <Button variant="outline" size="lg">Sign in to Save</Button>
+                </Link>
+              )}
             </div>
 
             {/* Resume Preview */}

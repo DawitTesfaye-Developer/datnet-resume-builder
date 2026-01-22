@@ -7,6 +7,9 @@ import { ResumeProvider } from "@/context/ResumeContext";
 import Index from "./pages/Index";
 import Builder from "./pages/Builder";
 import Templates from "./pages/Templates";
+import Auth from "./pages/Auth";
+import MyResumes from "./pages/MyResumes";
+import SharedResume from "./pages/SharedResume";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,8 +23,11 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
             <Route path="/builder" element={<Builder />} />
             <Route path="/templates" element={<Templates />} />
+            <Route path="/my-resumes" element={<MyResumes />} />
+            <Route path="/share/:shareId" element={<SharedResume />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
