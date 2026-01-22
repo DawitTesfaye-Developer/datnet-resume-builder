@@ -2,10 +2,13 @@ import { FileText, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -40,10 +43,30 @@ const Header = () => {
             >
               Templates
             </Link>
+            {user && (
+              <Link
+                to="/my-resumes"
+                className={`text-sm font-medium transition-colors ${isActive('/my-resumes') ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                My Resumes
+              </Link>
+            )}
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="sm">Sign In</Button>
+            {user ? (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => supabase.auth.signOut()}
+              >
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="sm">Sign In</Button>
+              </Link>
+            )}
             <Link to="/builder">
               <Button variant="gradient" size="sm">Create Resume</Button>
             </Link>
@@ -83,8 +106,33 @@ const Header = () => {
               >
                 Templates
               </Link>
+              {user && (
+                <Link
+                  to="/my-resumes"
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  My Resumes
+                </Link>
+              )}
               <div className="flex gap-3 pt-4">
-                <Button variant="ghost" size="sm" className="flex-1">Sign In</Button>
+                {user ? (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1"
+                    onClick={async () => {
+                      await supabase.auth.signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    Sign Out
+                  </Button>
+                ) : (
+                  <Link to="/auth" className="flex-1" onClick={() => setMobileMenuOpen(false)}>
+                    <Button variant="ghost" size="sm" className="w-full">Sign In</Button>
+                  </Link>
+                )}
                 <Link to="/builder" className="flex-1" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="gradient" size="sm" className="w-full">Create Resume</Button>
                 </Link>
