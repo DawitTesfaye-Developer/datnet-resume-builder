@@ -10,6 +10,7 @@ import Templates from "./pages/Templates";
 import Auth from "./pages/Auth";
 import MyResumes from "./pages/MyResumes";
 import SharedResume from "./pages/SharedResume";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/templates" element={<Templates />} />
             <Route path="/my-resumes" element={<MyResumes />} />
             <Route path="/share/:shareId" element={<SharedResume />} />
+            <Route path="/profile" element={<Profile />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

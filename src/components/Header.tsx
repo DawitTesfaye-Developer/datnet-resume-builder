@@ -1,9 +1,16 @@
-import { FileText, Menu, X } from 'lucide-react';
+import { FileText, Menu, User, X } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -55,13 +62,22 @@ const Header = () => {
 
           <div className="hidden md:flex items-center gap-3">
             {user ? (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => supabase.auth.signOut()}
-              >
-                Sign Out
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile">Profile &amp; Preferences</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => supabase.auth.signOut()}>
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link to="/auth">
                 <Button variant="ghost" size="sm">Sign In</Button>
@@ -107,13 +123,22 @@ const Header = () => {
                 Templates
               </Link>
               {user && (
-                <Link
-                  to="/my-resumes"
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  My Resumes
-                </Link>
+                <>
+                  <Link
+                    to="/my-resumes"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Resumes
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                </>
               )}
               <div className="flex gap-3 pt-4">
                 {user ? (
