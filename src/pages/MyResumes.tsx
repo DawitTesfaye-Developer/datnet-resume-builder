@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
+import ShareSettingsDialog from "@/components/ShareSettingsDialog";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { formatDistanceToNow } from "date-fns";
-import { Copy, ExternalLink, Trash2 } from "lucide-react";
+import { ExternalLink, Settings2, Trash2 } from "lucide-react";
 
 type ResumeRow = {
   id: string;
@@ -28,6 +29,7 @@ const MyResumes = () => {
   const [items, setItems] = useState<ResumeRow[]>([]);
   const [busyId, setBusyId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [shareDialogResume, setShareDialogResume] = useState<ResumeRow | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -66,26 +68,6 @@ const MyResumes = () => {
       setItems((prev) => prev.filter((x) => x.id !== resumeId));
     } catch (e: any) {
       toast({ title: "Delete failed", description: e?.message ?? "Please try again", variant: "destructive" });
-    } finally {
-      setBusyId(null);
-    }
-  };
-
-  const handleShare = async (resumeId: string) => {
-    setBusyId(resumeId);
-    try {
-      const { data, error } = await supabase
-        .from("resume_shares")
-        .insert({ resume_id: resumeId, is_active: true })
-        .select("public_id")
-        .single();
-      if (error) throw error;
-
-      const url = `${window.location.origin}/share/${data.public_id}`;
-      await navigator.clipboard.writeText(url);
-      toast({ title: "Share link copied", description: "Anyone with the link can view this resume." });
-    } catch (e: any) {
-      toast({ title: "Share failed", description: e?.message ?? "Please try again", variant: "destructive" });
     } finally {
       setBusyId(null);
     }
@@ -138,11 +120,10 @@ const MyResumes = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => handleShare(r.id)}
-                    disabled={busyId === r.id}
+                    onClick={() => setShareDialogResume(r)}
                   >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Share link
+                    <Settings2 className="w-4 h-4 mr-2" />
+                    Share settings
                   </Button>
                   <Button
                     variant="destructive"
@@ -170,6 +151,15 @@ const MyResumes = () => {
           </div>
         </div>
       </main>
+
+      {shareDialogResume && (
+        <ShareSettingsDialog
+          open={!!shareDialogResume}
+          onOpenChange={(open) => !open && setShareDialogResume(null)}
+          resumeId={shareDialogResume.id}
+          resumeTitle={shareDialogResume.title}
+        />
+      )}
     </div>
   );
 };
