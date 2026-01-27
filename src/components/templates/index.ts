@@ -38,7 +38,7 @@ export const templates: TemplateInfo[] = [
     name: 'Modern',
     description: 'Contemporary layout with a creative touch',
     component: ModernTemplate,
-    fields: ['marketing', 'design', 'technology', 'other'],
+    fields: ['marketing', 'design', 'technology', 'course_development', 'other'],
     popular: true,
     preview: { headerColor: 'bg-blue-600', accentColor: 'bg-blue-100' },
   },
@@ -96,7 +96,7 @@ export const templates: TemplateInfo[] = [
     name: 'Academic CV',
     description: 'Comprehensive format for research and academia',
     component: AcademicTemplate,
-    fields: ['education'],
+    fields: ['education', 'course_development'],
     preview: { headerColor: 'bg-gray-900', accentColor: 'bg-gray-100' },
   },
 ];

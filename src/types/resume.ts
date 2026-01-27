@@ -5,6 +5,7 @@ export type FieldCategory =
   | 'healthcare'
   | 'finance'
   | 'education'
+  | 'course_development'
   | 'marketing'
   | 'engineering'
   | 'design'
@@ -119,6 +120,7 @@ export const fieldCategories: { value: FieldCategory; label: string; icon: strin
   { value: 'healthcare', label: 'Healthcare', icon: '🏥', description: 'Medical, Nursing, Pharmacy' },
   { value: 'finance', label: 'Finance', icon: '💰', description: 'Banking, Accounting, Investment' },
   { value: 'education', label: 'Education', icon: '📚', description: 'Teaching, Research, Academia' },
+  { value: 'course_development', label: 'Course Developer', icon: '🎓', description: 'E-Learning, Instructional Design' },
   { value: 'marketing', label: 'Marketing', icon: '📢', description: 'Digital, Content, Brand' },
   { value: 'engineering', label: 'Engineering', icon: '⚙️', description: 'Mechanical, Civil, Electrical' },
   { value: 'design', label: 'Design', icon: '🎨', description: 'UX/UI, Graphic, Product' },
