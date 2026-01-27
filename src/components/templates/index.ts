@@ -7,6 +7,7 @@ import TechTemplate from './TechTemplate';
 import HealthcareTemplate from './HealthcareTemplate';
 import FinanceTemplate from './FinanceTemplate';
 import AcademicTemplate from './AcademicTemplate';
+import CourseDeveloperTemplate from './CourseDeveloperTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
@@ -96,8 +97,17 @@ export const templates: TemplateInfo[] = [
     name: 'Academic CV',
     description: 'Comprehensive format for research and academia',
     component: AcademicTemplate,
-    fields: ['education', 'course_development'],
+    fields: ['education'],
     preview: { headerColor: 'bg-gray-900', accentColor: 'bg-gray-100' },
+  },
+  {
+    id: 'course-developer',
+    name: 'Course Developer',
+    description: 'Designed for instructional designers and e-learning professionals',
+    component: CourseDeveloperTemplate,
+    fields: ['course_development', 'education'],
+    popular: true,
+    preview: { headerColor: 'bg-gradient-to-r from-indigo-600 to-purple-600', accentColor: 'bg-indigo-100' },
   },
 ];
 
@@ -121,4 +131,5 @@ export {
   HealthcareTemplate,
   FinanceTemplate,
   AcademicTemplate,
+  CourseDeveloperTemplate,
 };
