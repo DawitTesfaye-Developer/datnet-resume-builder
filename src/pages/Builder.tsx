@@ -24,12 +24,13 @@ import { Link, useSearchParams } from 'react-router-dom';
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
   { id: 2, name: 'Select Field', shortName: 'Field' },
-  { id: 3, name: 'Personal Info', shortName: 'Personal' },
-  { id: 4, name: 'Experience', shortName: 'Experience' },
-  { id: 5, name: 'Education', shortName: 'Education' },
-  { id: 6, name: 'Skills', shortName: 'Skills' },
-  { id: 7, name: 'Projects', shortName: 'Projects' },
-  { id: 8, name: 'Preview & Export', shortName: 'Preview' },
+  { id: 3, name: 'Choose Template', shortName: 'Template' },
+  { id: 4, name: 'Personal Info', shortName: 'Personal' },
+  { id: 5, name: 'Experience', shortName: 'Experience' },
+  { id: 6, name: 'Education', shortName: 'Education' },
+  { id: 7, name: 'Skills', shortName: 'Skills' },
+  { id: 8, name: 'Projects', shortName: 'Projects' },
+  { id: 9, name: 'Preview & Export', shortName: 'Preview' },
 ];
 
 const Builder = () => {
@@ -156,23 +157,75 @@ const Builder = () => {
             selected={resumeData.fieldCategory}
             onSelect={(field) => {
               updateResumeData({ fieldCategory: field });
-              // Auto-select recommended template for field
               const recommended = getRecommendedTemplate(field);
               setSelectedTemplateId(recommended.id);
             }}
           />
         );
       case 3:
-        return <PersonalInfoForm />;
+        return (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold mb-2">Choose a Template</h2>
+              <p className="text-muted-foreground">Pick the layout that best fits your style</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+              {availableTemplates.map((template) => {
+                const isSelected = selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id);
+                return (
+                  <button
+                    key={template.id}
+                    onClick={() => setSelectedTemplateId(template.id)}
+                    className={cn(
+                      "relative rounded-xl border-2 text-left transition-all overflow-hidden group",
+                      isSelected
+                        ? "border-primary ring-2 ring-primary/20"
+                        : "border-border hover:border-primary/50"
+                    )}
+                  >
+                    {isSelected && (
+                      <div className="absolute top-2 right-2 z-10 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                        <Check className="w-3.5 h-3.5 text-primary-foreground" />
+                      </div>
+                    )}
+                    {template.popular && (
+                      <Badge className="absolute top-2 left-2 z-10 bg-warning text-warning-foreground text-[10px]">Popular</Badge>
+                    )}
+                    <div className="aspect-[3/4] bg-secondary/50 p-2">
+                      <div className="h-full bg-card rounded-lg overflow-hidden shadow-sm">
+                        <div className={`h-10 ${template.preview.headerColor}`}></div>
+                        <div className="p-2 space-y-1">
+                          <div className="h-1.5 w-12 bg-foreground/20 rounded" />
+                          <div className="h-1 w-8 bg-muted-foreground/20 rounded" />
+                          <div className="mt-2 space-y-0.5">
+                            <div className="h-1 w-full bg-muted rounded" />
+                            <div className="h-1 w-4/5 bg-muted rounded" />
+                            <div className="h-1 w-3/4 bg-muted rounded" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="p-3">
+                      <h3 className="font-semibold text-sm">{template.name}</h3>
+                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{template.description}</p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
       case 4:
-        return <ExperienceForm />;
+        return <PersonalInfoForm />;
       case 5:
-        return <EducationForm />;
+        return <ExperienceForm />;
       case 6:
-        return <SkillsForm />;
+        return <EducationForm />;
       case 7:
-        return <ProjectsForm />;
+        return <SkillsForm />;
       case 8:
+        return <ProjectsForm />;
+      case 9:
         return (
           <div className="space-y-8">
             <div className="text-center">
@@ -180,7 +233,6 @@ const Builder = () => {
               <p className="text-muted-foreground">Choose your template and download when ready</p>
             </div>
 
-            {/* Template Selector */}
             <div className="max-w-4xl mx-auto">
               <h3 className="font-medium mb-4">Choose Template Style</h3>
               <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-8">
@@ -212,7 +264,6 @@ const Builder = () => {
                 <Download className="w-5 h-5 mr-2" />
                 Download PDF
               </Button>
-
               {user ? (
                 <>
                   <Button variant="success" size="lg" onClick={handleSaveToCloud}>
@@ -229,7 +280,6 @@ const Builder = () => {
               )}
             </div>
 
-            {/* Resume Preview */}
             <div className="print:block">
               <TemplateComponent data={resumeData} />
             </div>
@@ -257,14 +307,14 @@ const Builder = () => {
 
           {/* Main Content */}
           <div className="flex gap-8">
-            <div className={`flex-1 transition-all duration-300 ${showPreview && currentStep !== 8 ? 'lg:w-1/2' : 'w-full'}`}>
+            <div className={`flex-1 transition-all duration-300 ${showPreview && currentStep !== 9 ? 'lg:w-1/2' : 'w-full'}`}>
               <div className="animate-fade-in">
                 {renderStepContent()}
               </div>
             </div>
 
             {/* Side Preview */}
-            {showPreview && currentStep !== 8 && (
+            {showPreview && currentStep !== 9 && (
               <div className="hidden lg:block w-1/2 animate-slide-up">
                 <div className="sticky top-24">
                   <div className="flex items-center justify-between mb-4">
@@ -316,7 +366,7 @@ const Builder = () => {
               </div>
             )}
 
-            {currentStep > 2 && currentStep < 8 && (
+            {currentStep > 3 && currentStep < 9 && (
               <Button
                 variant="ghost"
                 onClick={() => setShowPreview(!showPreview)}
