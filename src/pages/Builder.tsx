@@ -13,11 +13,12 @@ import { templates, getTemplatesForField, getRecommendedTemplate } from '@/compo
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Eye, EyeOff, Download, Check } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Eye, EyeOff, Download, Check, Cloud, CloudOff, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useAutosave } from '@/hooks/useAutosave';
 import { Link, useSearchParams } from 'react-router-dom';
 
 const steps = [
@@ -53,6 +54,14 @@ const Builder = () => {
     }
     return getRecommendedTemplate(resumeData.fieldCategory);
   }, [selectedTemplateId, resumeData.fieldCategory]);
+
+  // Autosave
+  const { lastSaved, isSaving } = useAutosave({
+    resumeData,
+    activeResumeId,
+    userId: user?.id,
+    templateId: currentTemplate.id,
+  });
 
   // Load an existing saved resume (if opened from "My Resumes")
   useEffect(() => {
@@ -285,6 +294,28 @@ const Builder = () => {
           </Button>
 
           <div className="flex items-center gap-4">
+            {/* Autosave indicator */}
+            {activeResumeId && user && (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                {isSaving ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Saving…</span>
+                  </>
+                ) : lastSaved ? (
+                  <>
+                    <Cloud className="w-3.5 h-3.5 text-green-500" />
+                    <span>Saved {lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                  </>
+                ) : (
+                  <>
+                    <CloudOff className="w-3.5 h-3.5" />
+                    <span>Not saved</span>
+                  </>
+                )}
+              </div>
+            )}
+
             {currentStep > 2 && currentStep < 8 && (
               <Button
                 variant="ghost"
