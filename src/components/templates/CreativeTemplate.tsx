@@ -21,11 +21,15 @@ const CreativeTemplate = ({ data }: TemplateProps) => {
         <div className="w-1/3 bg-gradient-to-b from-purple-600 to-pink-500 text-white p-6">
           {/* Profile */}
           <div className="mb-8">
-            <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl font-bold">
-                {personalInfo.fullName?.split(' ').map(n => n[0]).join('') || '?'}
-              </span>
-            </div>
+            {personalInfo.photoUrl ? (
+              <img src={personalInfo.photoUrl} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-white/30" />
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl font-bold">
+                  {personalInfo.fullName?.split(' ').map(n => n[0]).join('') || '?'}
+                </span>
+              </div>
+            )}
             <h1 className="text-xl font-bold text-center mb-4">
               {personalInfo.fullName || 'Your Name'}
             </h1>

@@ -21,6 +21,7 @@ export interface PersonalInfo {
   linkedIn?: string;
   portfolio?: string;
   summary: string;
+  photoUrl?: string;
 }
 
 export interface Experience {

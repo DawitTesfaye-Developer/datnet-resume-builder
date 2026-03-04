@@ -18,6 +18,11 @@ const ProfessionalTemplate = ({ data }: TemplateProps) => {
     <div className="bg-white text-gray-900 p-8 shadow-xl max-w-[8.5in] mx-auto" style={{ fontFamily: 'Georgia, serif' }}>
       {/* Header */}
       <header className="border-b-2 border-gray-800 pb-4 mb-6">
+        <div className="flex items-center gap-4">
+          {personalInfo.photoUrl && (
+            <img src={personalInfo.photoUrl} alt="" className="w-16 h-16 rounded-full object-cover" />
+          )}
+          <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           {personalInfo.fullName || 'Your Name'}
         </h1>
@@ -46,6 +51,8 @@ const ProfessionalTemplate = ({ data }: TemplateProps) => {
               {personalInfo.linkedIn}
             </span>
           )}
+        </div>
+          </div>
         </div>
       </header>
 

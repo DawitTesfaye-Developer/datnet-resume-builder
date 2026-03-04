@@ -46,6 +46,11 @@ const CourseDeveloperTemplate = ({ data }: TemplateProps) => {
     <div className="bg-white text-gray-900 shadow-xl max-w-[8.5in] mx-auto" style={{ fontFamily: 'Segoe UI, Roboto, sans-serif' }}>
       {/* Header */}
       <header className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8">
+        <div className="flex items-center gap-5">
+          {personalInfo.photoUrl && (
+            <img src={personalInfo.photoUrl} alt="" className="w-20 h-20 rounded-full object-cover border-2 border-white/30" />
+          )}
+          <div>
         <h1 className="text-3xl font-bold mb-1">
           {personalInfo.fullName || 'Your Name'}
         </h1>
@@ -81,6 +86,8 @@ const CourseDeveloperTemplate = ({ data }: TemplateProps) => {
               {personalInfo.portfolio}
             </span>
           )}
+        </div>
+          </div>
         </div>
       </header>
 
