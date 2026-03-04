@@ -18,6 +18,9 @@ const ExecutiveTemplate = ({ data }: TemplateProps) => {
     <div className="bg-white text-gray-900 shadow-xl max-w-[8.5in] mx-auto" style={{ fontFamily: 'Cambria, Georgia, serif' }}>
       {/* Header */}
       <header className="bg-slate-900 text-white p-10 text-center">
+        {personalInfo.photoUrl && (
+          <img src={personalInfo.photoUrl} alt="" className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-white/20" />
+        )}
         <h1 className="text-4xl font-light tracking-widest uppercase mb-2">
           {personalInfo.fullName || 'Your Name'}
         </h1>

@@ -1,18 +1,88 @@
+import { useRef } from 'react';
 import { useResume } from '@/context/ResumeContext';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { User, Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X } from 'lucide-react';
 
 const PersonalInfoForm = () => {
   const { resumeData, updatePersonalInfo } = useResume();
   const { personalInfo } = resumeData;
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image must be under 5MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      updatePersonalInfo({ photoUrl: event.target?.result as string });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto = () => {
+    updatePersonalInfo({ photoUrl: undefined });
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-semibold mb-2">Personal Information</h2>
         <p className="text-muted-foreground">Let's start with your basic details</p>
+      </div>
+
+      <div className="flex flex-col items-center gap-3 mb-6">
+        <div className="relative group">
+          {personalInfo.photoUrl ? (
+            <div className="relative">
+              <img
+                src={personalInfo.photoUrl}
+                alt="Profile"
+                className="w-28 h-28 rounded-full object-cover border-4 border-primary/20 shadow-md"
+              />
+              <button
+                onClick={removePhoto}
+                className="absolute -top-1 -right-1 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow-sm hover:bg-destructive/90 transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="w-28 h-28 rounded-full bg-muted border-2 border-dashed border-border hover:border-primary/50 flex flex-col items-center justify-center gap-1 transition-colors cursor-pointer"
+            >
+              <Camera className="w-6 h-6 text-muted-foreground" />
+              <span className="text-xs text-muted-foreground">Add Photo</span>
+            </button>
+          )}
+        </div>
+        {personalInfo.photoUrl && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => fileInputRef.current?.click()}
+            className="text-xs"
+          >
+            Change Photo
+          </Button>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handlePhotoUpload}
+          className="hidden"
+        />
+        <p className="text-xs text-muted-foreground">Optional · JPG, PNG under 5MB</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">

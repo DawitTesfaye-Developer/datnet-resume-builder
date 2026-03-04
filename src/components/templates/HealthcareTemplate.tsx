@@ -19,9 +19,13 @@ const HealthcareTemplate = ({ data }: TemplateProps) => {
       {/* Header with medical accent */}
       <header className="bg-gradient-to-r from-teal-600 to-teal-700 text-white p-8">
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-            <Heart className="w-8 h-8" />
-          </div>
+          {personalInfo.photoUrl ? (
+            <img src={personalInfo.photoUrl} alt="" className="w-16 h-16 rounded-full object-cover border-2 border-white/30" />
+          ) : (
+            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
+              <Heart className="w-8 h-8" />
+            </div>
+          )}
           <div>
             <h1 className="text-3xl font-bold">
               {personalInfo.fullName || 'Your Name'}

@@ -18,6 +18,11 @@ const ModernTemplate = ({ data }: TemplateProps) => {
     <div className="bg-white text-gray-900 shadow-xl max-w-[8.5in] mx-auto overflow-hidden">
       {/* Header with accent */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8">
+        <div className="flex items-center gap-6">
+          {personalInfo.photoUrl && (
+            <img src={personalInfo.photoUrl} alt="" className="w-20 h-20 rounded-full object-cover border-3 border-white/30" />
+          )}
+          <div>
         <h1 className="text-4xl font-bold mb-2">
           {personalInfo.fullName || 'Your Name'}
         </h1>
@@ -46,6 +51,8 @@ const ModernTemplate = ({ data }: TemplateProps) => {
               {personalInfo.linkedIn}
             </span>
           )}
+        </div>
+          </div>
         </div>
       </header>
 
