@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Plus, X, Sparkles } from 'lucide-react';
+import { Plus, X, Sparkles, GraduationCap } from 'lucide-react';
 import { Skill, fieldCategories } from '@/types/resume';
 import {
   Select,
@@ -24,8 +24,19 @@ const skillSuggestions: Record<string, string[]> = {
   design: ['Figma', 'Adobe Creative Suite', 'UI/UX Design', 'Wireframing', 'Design Systems', 'Prototyping'],
   legal: ['Legal Research', 'Contract Law', 'LexisNexis', 'Document Review', 'Compliance', 'Case Management'],
   sales: ['CRM Software', 'Salesforce', 'Negotiation', 'Lead Generation', 'Account Management', 'Cold Calling'],
+  course_development: ['Articulate Storyline', 'Articulate Rise', 'Adobe Captivate', 'Camtasia', 'Instructional Design', 'Storyboarding', 'SCORM', 'xAPI'],
   other: ['Microsoft Office', 'Communication', 'Problem Solving', 'Leadership', 'Time Management', 'Teamwork'],
 };
+
+const lmsSkills = [
+  'Articulate Storyline', 'Articulate Rise', 'Adobe Captivate', 'Camtasia',
+  'Canvas LMS', 'Moodle', 'Blackboard', 'Google Classroom',
+  'Brightspace (D2L)', 'Schoology', 'TalentLMS', 'Docebo',
+  'SCORM', 'xAPI (Tin Can)', 'cmi5', 'LTI',
+  'Lectora', 'iSpring Suite', 'Vyond', 'H5P',
+];
+
+const lmsFieldCategories = ['course_development', 'education', 'technology'];
 
 const SkillsForm = () => {
   const { resumeData, addSkill, removeSkill } = useResume();
@@ -124,7 +135,32 @@ const SkillsForm = () => {
           </div>
         </Card>
 
-        {/* Added Skills */}
+        {/* LMS & Authoring Tools Quick-Add */}
+        {lmsFieldCategories.includes(resumeData.fieldCategory) && (
+          <Card className="p-6 border-accent/30">
+            <div className="flex items-center gap-2 mb-4">
+              <GraduationCap className="w-5 h-5 text-accent" />
+              <h3 className="font-medium">LMS & Authoring Tools</h3>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {lmsSkills
+                .filter((s) => !existingSkillNames.includes(s.toLowerCase()))
+                .map((skill) => (
+                  <Button
+                    key={skill}
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleAddSkill(skill)}
+                    className="rounded-full border-accent/40 hover:bg-accent/10"
+                  >
+                    <Plus className="w-3 h-3 mr-1" />
+                    {skill}
+                  </Button>
+                ))}
+            </div>
+          </Card>
+        )}
+
         {resumeData.skills.length > 0 && (
           <Card className="p-6">
             <h3 className="font-medium mb-4">Your Skills ({resumeData.skills.length})</h3>
