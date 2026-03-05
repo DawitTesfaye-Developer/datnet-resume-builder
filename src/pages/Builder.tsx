@@ -20,6 +20,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAutosave } from '@/hooks/useAutosave';
 import { Link, useSearchParams } from 'react-router-dom';
+import AiAssistantDialog from '@/components/AiAssistantDialog';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
@@ -364,6 +365,10 @@ const Builder = () => {
                   </>
                 )}
               </div>
+            )}
+
+            {currentStep >= 4 && currentStep <= 8 && (
+              <AiAssistantDialog />
             )}
 
             {currentStep > 3 && currentStep < 9 && (
