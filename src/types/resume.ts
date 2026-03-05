@@ -19,6 +19,7 @@ export interface PersonalInfo {
   phone: string;
   location: string;
   linkedIn?: string;
+  github?: string;
   portfolio?: string;
   summary: string;
   photoUrl?: string;
@@ -82,6 +83,16 @@ export interface Publication {
   description: string;
 }
 
+export interface Reference {
+  id: string;
+  name: string;
+  position: string;
+  company: string;
+  email: string;
+  phone?: string;
+  relationship: string;
+}
+
 export interface ResumeData {
   documentType: DocumentType;
   fieldCategory: FieldCategory;
@@ -93,6 +104,8 @@ export interface ResumeData {
   projects: Project[];
   publications: Publication[];
   languages: { id: string; name: string; proficiency: string }[];
+  references: Reference[];
+  referencesAvailable: boolean;
 }
 
 export const defaultResumeData: ResumeData = {
@@ -104,6 +117,7 @@ export const defaultResumeData: ResumeData = {
     phone: '',
     location: '',
     linkedIn: '',
+    github: '',
     portfolio: '',
     summary: '',
   },
@@ -114,6 +128,8 @@ export const defaultResumeData: ResumeData = {
   projects: [],
   publications: [],
   languages: [],
+  references: [],
+  referencesAvailable: true,
 };
 
 export const fieldCategories: { value: FieldCategory; label: string; icon: string; description: string }[] = [
