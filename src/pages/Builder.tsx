@@ -9,6 +9,9 @@ import ExperienceForm from '@/components/forms/ExperienceForm';
 import EducationForm from '@/components/forms/EducationForm';
 import SkillsForm from '@/components/forms/SkillsForm';
 import ProjectsForm from '@/components/forms/ProjectsForm';
+import CertificationsForm from '@/components/forms/CertificationsForm';
+import LanguagesForm from '@/components/forms/LanguagesForm';
+import ReferencesForm from '@/components/forms/ReferencesForm';
 import { templates, getTemplatesForField, getRecommendedTemplate } from '@/components/templates';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -30,8 +33,11 @@ const steps = [
   { id: 5, name: 'Experience', shortName: 'Experience' },
   { id: 6, name: 'Education', shortName: 'Education' },
   { id: 7, name: 'Skills', shortName: 'Skills' },
-  { id: 8, name: 'Projects', shortName: 'Projects' },
-  { id: 9, name: 'Preview & Export', shortName: 'Preview' },
+  { id: 8, name: 'Certifications', shortName: 'Certs' },
+  { id: 9, name: 'Projects', shortName: 'Projects' },
+  { id: 10, name: 'Languages', shortName: 'Languages' },
+  { id: 11, name: 'References', shortName: 'Refs' },
+  { id: 12, name: 'Preview & Export', shortName: 'Preview' },
 ];
 
 const Builder = () => {
@@ -225,8 +231,14 @@ const Builder = () => {
       case 7:
         return <SkillsForm />;
       case 8:
-        return <ProjectsForm />;
+        return <CertificationsForm />;
       case 9:
+        return <ProjectsForm />;
+      case 10:
+        return <LanguagesForm />;
+      case 11:
+        return <ReferencesForm />;
+      case 12:
         return (
           <div className="space-y-8">
             <div className="text-center">
@@ -315,7 +327,7 @@ const Builder = () => {
             </div>
 
             {/* Side Preview */}
-            {showPreview && currentStep !== 9 && (
+            {showPreview && currentStep !== 12 && (
               <div className="hidden lg:block w-1/2 animate-slide-up">
                 <div className="sticky top-24">
                   <div className="flex items-center justify-between mb-4">
@@ -367,11 +379,11 @@ const Builder = () => {
               </div>
             )}
 
-            {currentStep >= 4 && currentStep <= 8 && (
+            {currentStep >= 4 && currentStep <= 11 && (
               <AiAssistantDialog />
             )}
 
-            {currentStep > 3 && currentStep < 9 && (
+            {currentStep > 3 && currentStep < 12 && (
               <Button
                 variant="ghost"
                 onClick={() => setShowPreview(!showPreview)}

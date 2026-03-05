@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { ResumeData, defaultResumeData } from '@/types/resume';
+import { ResumeData, defaultResumeData, Reference } from '@/types/resume';
 
 interface ResumeContextType {
   resumeData: ResumeData;
@@ -18,6 +18,10 @@ interface ResumeContextType {
   removeCertification: (id: string) => void;
   addProject: (project: ResumeData['projects'][0]) => void;
   removeProject: (id: string) => void;
+  addLanguage: (language: ResumeData['languages'][0]) => void;
+  removeLanguage: (id: string) => void;
+  addReference: (ref: Reference) => void;
+  removeReference: (id: string) => void;
   resetResumeData: () => void;
   currentStep: number;
   setCurrentStep: (step: number) => void;
@@ -132,6 +136,34 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     }));
   };
 
+  const addLanguage = (language: ResumeData['languages'][0]) => {
+    setResumeData((prev) => ({
+      ...prev,
+      languages: [...prev.languages, language],
+    }));
+  };
+
+  const removeLanguage = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      languages: prev.languages.filter((l) => l.id !== id),
+    }));
+  };
+
+  const addReference = (ref: Reference) => {
+    setResumeData((prev) => ({
+      ...prev,
+      references: [...prev.references, ref],
+    }));
+  };
+
+  const removeReference = (id: string) => {
+    setResumeData((prev) => ({
+      ...prev,
+      references: prev.references.filter((r) => r.id !== id),
+    }));
+  };
+
   const resetResumeData = () => {
     setResumeData(defaultResumeData);
     setCurrentStep(0);
@@ -156,6 +188,10 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         removeCertification,
         addProject,
         removeProject,
+        addLanguage,
+        removeLanguage,
+        addReference,
+        removeReference,
         resetResumeData,
         currentStep,
         setCurrentStep,

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X } from 'lucide-react';
+import { User, Mail, Phone, MapPin, Linkedin, Globe, Camera, X, Github } from 'lucide-react';
 
 const PersonalInfoForm = () => {
   const { resumeData, updatePersonalInfo } = useResume();
@@ -150,6 +150,19 @@ const PersonalInfoForm = () => {
             placeholder="linkedin.com/in/johndoe"
             value={personalInfo.linkedIn}
             onChange={(e) => updatePersonalInfo({ linkedIn: e.target.value })}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="github" className="flex items-center gap-2">
+            <Github className="w-4 h-4" />
+            GitHub
+          </Label>
+          <Input
+            id="github"
+            placeholder="github.com/johndoe"
+            value={personalInfo.github}
+            onChange={(e) => updatePersonalInfo({ github: e.target.value })}
           />
         </div>
 
