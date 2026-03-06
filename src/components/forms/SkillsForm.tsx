@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Plus, X, Sparkles, GraduationCap } from 'lucide-react';
+import { Plus, X, Sparkles, GraduationCap, Loader2 } from 'lucide-react';
 import { Skill, fieldCategories } from '@/types/resume';
+import { useAiAssistant } from '@/hooks/useAiAssistant';
 import {
   Select,
   SelectContent,
@@ -40,8 +41,10 @@ const lmsFieldCategories = ['course_development', 'education', 'technology'];
 
 const SkillsForm = () => {
   const { resumeData, addSkill, removeSkill } = useResume();
+  const { invoke, isLoading: aiLoading } = useAiAssistant();
   const [newSkill, setNewSkill] = useState('');
   const [skillLevel, setSkillLevel] = useState<Skill['level']>('intermediate');
+  const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
 
   const suggestions = skillSuggestions[resumeData.fieldCategory] || skillSuggestions.other;
   const existingSkillNames = resumeData.skills.map((s) => s.name.toLowerCase());
@@ -113,12 +116,34 @@ const SkillsForm = () => {
 
         {/* Suggestions */}
         <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-warning" />
-            <h3 className="font-medium">Suggested for {fieldCategories.find(f => f.value === resumeData.fieldCategory)?.label}</h3>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-warning" />
+              <h3 className="font-medium">Suggested for {fieldCategories.find(f => f.value === resumeData.fieldCategory)?.label}</h3>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 text-primary"
+              disabled={aiLoading}
+              onClick={async () => {
+                const ctx = `Field: ${resumeData.fieldCategory}\nExisting skills: ${resumeData.skills.map(s => s.name).join(', ')}\nExperience: ${resumeData.experiences.map(e => `${e.position} at ${e.company}`).join(', ')}`;
+                const res = await invoke('suggest_skills', ctx);
+                if (res) {
+                  try {
+                    const parsed = JSON.parse(res);
+                    if (Array.isArray(parsed)) setAiSuggestions(parsed);
+                  } catch { /* ignore */ }
+                }
+              }}
+            >
+              {aiLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
+              AI Suggest
+            </Button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {suggestions
+            {[...suggestions, ...aiSuggestions]
+              .filter((s, i, arr) => arr.indexOf(s) === i) // dedupe
               .filter((s) => !existingSkillNames.includes(s.toLowerCase()))
               .map((skill) => (
                 <Button

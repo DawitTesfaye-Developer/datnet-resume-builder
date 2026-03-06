@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Plus, Trash2, GraduationCap, Building, Calendar, Award } from 'lucide-react';
 import { Education } from '@/types/resume';
+import InlineAiButton from '@/components/InlineAiButton';
 
 const EducationForm = () => {
   const { resumeData, addEducation, updateEducation, removeEducation } = useResume();
@@ -195,7 +196,18 @@ const EducationForm = () => {
               </div>
 
               <div className="md:col-span-2 space-y-3">
-                <Label>Honors & Activities (Optional)</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Honors & Activities (Optional)</Label>
+                  <InlineAiButton
+                    action="inline_bullets"
+                    context={`Education: ${formData.degree} in ${formData.field} at ${formData.institution}. Generate relevant honors, activities, and academic achievements.`}
+                    onApply={(bullets) => {
+                      const newItems = bullets.split('\n').map(b => b.replace(/^[•\-]\s*/, '').trim()).filter(Boolean);
+                      setFormData({ ...formData, achievements: [...formData.achievements.filter(a => a.trim()), ...newItems] });
+                    }}
+                    label="Suggest with AI"
+                  />
+                </div>
                 {formData.achievements.map((achievement, index) => (
                   <div key={index} className="flex gap-2">
                     <Input

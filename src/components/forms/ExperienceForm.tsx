@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
 import { Plus, Trash2, Briefcase, Building, MapPin, Calendar } from 'lucide-react';
 import { Experience } from '@/types/resume';
+import InlineAiButton from '@/components/InlineAiButton';
 
 const ExperienceForm = () => {
   const { resumeData, addExperience, updateExperience, removeExperience } = useResume();
@@ -195,7 +196,17 @@ const ExperienceForm = () => {
               </div>
 
               <div className="md:col-span-2 space-y-2">
-                <Label>Job Description</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Job Description</Label>
+                  {formData.description.trim() && (
+                    <InlineAiButton
+                      action="inline_improve"
+                      context={formData.description}
+                      onApply={(text) => setFormData({ ...formData, description: text })}
+                      label="Improve with AI"
+                    />
+                  )}
+                </div>
                 <Textarea
                   placeholder="Brief description of your role and responsibilities..."
                   value={formData.description}
@@ -205,7 +216,18 @@ const ExperienceForm = () => {
               </div>
 
               <div className="md:col-span-2 space-y-3">
-                <Label>Key Achievements (use action verbs)</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Key Achievements (use action verbs)</Label>
+                  <InlineAiButton
+                    action="inline_bullets"
+                    context={`Role: ${formData.position} at ${formData.company}${formData.location ? `, ${formData.location}` : ''}. ${formData.description}`}
+                    onApply={(bullets) => {
+                      const newBullets = bullets.split('\n').map(b => b.replace(/^[•\-]\s*/, '').trim()).filter(Boolean);
+                      setFormData({ ...formData, achievements: [...formData.achievements.filter(a => a.trim()), ...newBullets] });
+                    }}
+                    label="Generate with AI"
+                  />
+                </div>
                 {formData.achievements.map((achievement, index) => (
                   <div key={index} className="flex gap-2">
                     <Input

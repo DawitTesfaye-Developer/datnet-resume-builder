@@ -20,6 +20,73 @@ const SYSTEM_PROMPTS: Record<string, string> = {
   "experienceTips": ["tip1 for tailoring experience section", "tip2", "tip3"]
 }
 Return ONLY valid JSON, no markdown code blocks.`,
+
+  review_resume: `You are an expert resume reviewer and career coach. Analyze the provided resume data and return a JSON object with this exact structure:
+{
+  "score": <number 1-100>,
+  "grade": "<A+, A, B+, B, C+, C, D, F>",
+  "strengths": ["strength1", "strength2", "strength3"],
+  "improvements": ["actionable improvement 1", "actionable improvement 2", "actionable improvement 3", "actionable improvement 4"],
+  "missingSecions": ["section that should be added"],
+  "tips": ["specific tip 1", "specific tip 2"]
+}
+Score criteria: completeness (25%), impact of language (25%), quantified achievements (20%), relevance (15%), formatting/structure (15%). Return ONLY valid JSON, no markdown code blocks.`,
+
+  generate_cover_letter: `You are a professional cover letter writer. Generate a compelling, personalized cover letter based on the provided resume data and job description. The letter should:
+- Have a strong opening hook
+- Highlight 2-3 most relevant experiences/achievements
+- Show enthusiasm for the specific role/company
+- Be 3-4 paragraphs, professional but personable
+- End with a clear call to action
+Return ONLY the cover letter text. Do not include "[Your Name]" placeholders - use the actual name provided.`,
+
+  parse_resume_text: `You are a resume data extraction expert. Parse the provided raw text (from a resume, LinkedIn profile, or job description) and extract structured data. Return a JSON object with this exact structure:
+{
+  "personalInfo": {
+    "fullName": "",
+    "email": "",
+    "phone": "",
+    "location": "",
+    "linkedIn": "",
+    "github": "",
+    "portfolio": "",
+    "summary": ""
+  },
+  "experiences": [
+    {
+      "company": "",
+      "position": "",
+      "location": "",
+      "startDate": "",
+      "endDate": "",
+      "current": false,
+      "description": "",
+      "achievements": []
+    }
+  ],
+  "education": [
+    {
+      "institution": "",
+      "degree": "",
+      "field": "",
+      "location": "",
+      "startDate": "",
+      "endDate": "",
+      "gpa": "",
+      "achievements": []
+    }
+  ],
+  "skills": [{"name": "", "level": "intermediate"}],
+  "certifications": [{"name": "", "issuer": "", "date": ""}],
+  "languages": [{"name": "", "proficiency": ""}]
+}
+Only include fields that are found in the text. Use empty arrays for missing sections. Dates should be in YYYY-MM format when possible. Return ONLY valid JSON, no markdown code blocks.`,
+
+  inline_improve: `You are a professional resume editor. Improve the given text to be more impactful and professional for a resume. Use strong action verbs and quantify where possible. Return ONLY the improved text, nothing else.`,
+
+  inline_bullets: `You are a professional resume writer. Generate 3-4 impactful achievement bullet points for the given role context. Each bullet should start with a strong action verb and include quantifiable results. Return each bullet on its own line, starting with "• ". No other text.`,
+
+  suggest_skills: `You are a career advisor. Based on the provided context (field, role, existing skills), suggest 5-8 additional relevant skills the candidate should add. Return ONLY a JSON array of skill name strings, no markdown code blocks. Example: ["Skill 1", "Skill 2"]`,
 };
 
 serve(async (req) => {

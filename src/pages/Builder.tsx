@@ -24,6 +24,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useAutosave } from '@/hooks/useAutosave';
 import { Link, useSearchParams } from 'react-router-dom';
 import AiAssistantDialog from '@/components/AiAssistantDialog';
+import AiReviewDialog from '@/components/AiReviewDialog';
+import AiCoverLetterDialog from '@/components/AiCoverLetterDialog';
+import AiAutoFillDialog from '@/components/AiAutoFillDialog';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
@@ -380,7 +383,12 @@ const Builder = () => {
             )}
 
             {currentStep >= 4 && currentStep <= 11 && (
-              <AiAssistantDialog />
+              <div className="flex items-center gap-2">
+                <AiAssistantDialog />
+                <AiReviewDialog />
+                <AiCoverLetterDialog />
+                <AiAutoFillDialog />
+              </div>
             )}
 
             {currentStep > 3 && currentStep < 12 && (
