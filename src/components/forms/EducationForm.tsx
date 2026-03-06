@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Plus, Trash2, GraduationCap, Building, Calendar, Award } from 'lucide-react';
 import { Education } from '@/types/resume';
+import InlineAiButton from '@/components/InlineAiButton';
 
 const EducationForm = () => {
   const { resumeData, addEducation, updateEducation, removeEducation } = useResume();
