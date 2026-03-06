@@ -196,7 +196,17 @@ const ExperienceForm = () => {
               </div>
 
               <div className="md:col-span-2 space-y-2">
-                <Label>Job Description</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Job Description</Label>
+                  {formData.description.trim() && (
+                    <InlineAiButton
+                      action="inline_improve"
+                      context={formData.description}
+                      onApply={(text) => setFormData({ ...formData, description: text })}
+                      label="Improve with AI"
+                    />
+                  )}
+                </div>
                 <Textarea
                   placeholder="Brief description of your role and responsibilities..."
                   value={formData.description}
