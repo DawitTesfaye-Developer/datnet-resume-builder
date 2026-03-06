@@ -216,7 +216,18 @@ const ExperienceForm = () => {
               </div>
 
               <div className="md:col-span-2 space-y-3">
-                <Label>Key Achievements (use action verbs)</Label>
+                <div className="flex items-center justify-between">
+                  <Label>Key Achievements (use action verbs)</Label>
+                  <InlineAiButton
+                    action="inline_bullets"
+                    context={`Role: ${formData.position} at ${formData.company}${formData.location ? `, ${formData.location}` : ''}. ${formData.description}`}
+                    onApply={(bullets) => {
+                      const newBullets = bullets.split('\n').map(b => b.replace(/^[•\-]\s*/, '').trim()).filter(Boolean);
+                      setFormData({ ...formData, achievements: [...formData.achievements.filter(a => a.trim()), ...newBullets] });
+                    }}
+                    label="Generate with AI"
+                  />
+                </div>
                 {formData.achievements.map((achievement, index) => (
                   <div key={index} className="flex gap-2">
                     <Input
