@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card } from '@/components/ui/card';
 import { Plus, Trash2, Briefcase, Building, MapPin, Calendar } from 'lucide-react';
 import { Experience } from '@/types/resume';
+import InlineAiButton from '@/components/InlineAiButton';
 
 const ExperienceForm = () => {
   const { resumeData, addExperience, updateExperience, removeExperience } = useResume();
