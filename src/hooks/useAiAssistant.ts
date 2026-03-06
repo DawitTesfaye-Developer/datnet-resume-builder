@@ -2,7 +2,17 @@ import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
-type AiAction = 'generate_summary' | 'improve_text' | 'generate_bullets' | 'generate_from_job';
+type AiAction =
+  | 'generate_summary'
+  | 'improve_text'
+  | 'generate_bullets'
+  | 'generate_from_job'
+  | 'review_resume'
+  | 'generate_cover_letter'
+  | 'parse_resume_text'
+  | 'inline_improve'
+  | 'inline_bullets'
+  | 'suggest_skills';
 
 export function useAiAssistant() {
   const [isLoading, setIsLoading] = useState(false);
