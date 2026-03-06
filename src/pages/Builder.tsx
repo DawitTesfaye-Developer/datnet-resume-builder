@@ -383,7 +383,12 @@ const Builder = () => {
             )}
 
             {currentStep >= 4 && currentStep <= 11 && (
-              <AiAssistantDialog />
+              <div className="flex items-center gap-2">
+                <AiAssistantDialog />
+                <AiReviewDialog />
+                <AiCoverLetterDialog />
+                <AiAutoFillDialog />
+              </div>
             )}
 
             {currentStep > 3 && currentStep < 12 && (
