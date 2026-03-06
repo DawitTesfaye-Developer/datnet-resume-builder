@@ -41,7 +41,10 @@ const lmsFieldCategories = ['course_development', 'education', 'technology'];
 
 const SkillsForm = () => {
   const { resumeData, addSkill, removeSkill } = useResume();
+  const { invoke, isLoading: aiLoading } = useAiAssistant();
   const [newSkill, setNewSkill] = useState('');
+  const [skillLevel, setSkillLevel] = useState<Skill['level']>('intermediate');
+  const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
   const [skillLevel, setSkillLevel] = useState<Skill['level']>('intermediate');
 
   const suggestions = skillSuggestions[resumeData.fieldCategory] || skillSuggestions.other;
