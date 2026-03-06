@@ -45,7 +45,6 @@ const SkillsForm = () => {
   const [newSkill, setNewSkill] = useState('');
   const [skillLevel, setSkillLevel] = useState<Skill['level']>('intermediate');
   const [aiSuggestions, setAiSuggestions] = useState<string[]>([]);
-  const [skillLevel, setSkillLevel] = useState<Skill['level']>('intermediate');
 
   const suggestions = skillSuggestions[resumeData.fieldCategory] || skillSuggestions.other;
   const existingSkillNames = resumeData.skills.map((s) => s.name.toLowerCase());
