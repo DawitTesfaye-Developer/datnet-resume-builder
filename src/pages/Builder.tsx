@@ -24,6 +24,9 @@ import { useToast } from '@/hooks/use-toast';
 import { useAutosave } from '@/hooks/useAutosave';
 import { Link, useSearchParams } from 'react-router-dom';
 import AiAssistantDialog from '@/components/AiAssistantDialog';
+import AiReviewDialog from '@/components/AiReviewDialog';
+import AiCoverLetterDialog from '@/components/AiCoverLetterDialog';
+import AiAutoFillDialog from '@/components/AiAutoFillDialog';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
