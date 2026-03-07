@@ -8,6 +8,13 @@ import HealthcareTemplate from './HealthcareTemplate';
 import FinanceTemplate from './FinanceTemplate';
 import AcademicTemplate from './AcademicTemplate';
 import CourseDeveloperTemplate from './CourseDeveloperTemplate';
+import HRTemplate from './HRTemplate';
+import HospitalityTemplate from './HospitalityTemplate';
+import MediaTemplate from './MediaTemplate';
+import ScienceTemplate from './ScienceTemplate';
+import GovernmentTemplate from './GovernmentTemplate';
+import ConstructionTemplate from './ConstructionTemplate';
+import LogisticsTemplate from './LogisticsTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
@@ -30,7 +37,7 @@ export const templates: TemplateInfo[] = [
     name: 'Professional',
     description: 'Clean and traditional design perfect for corporate roles',
     component: ProfessionalTemplate,
-    fields: ['finance', 'legal', 'sales', 'other'],
+    fields: ['finance', 'legal', 'sales', 'human_resources', 'other'],
     popular: true,
     preview: { headerColor: 'bg-gray-800', accentColor: 'bg-gray-300' },
   },
@@ -56,7 +63,7 @@ export const templates: TemplateInfo[] = [
     name: 'Creative',
     description: 'Bold design for creative professionals',
     component: CreativeTemplate,
-    fields: ['design', 'marketing', 'other'],
+    fields: ['design', 'marketing', 'media', 'other'],
     preview: { headerColor: 'bg-gradient-to-r from-purple-600 to-pink-500', accentColor: 'bg-purple-100' },
   },
   {
@@ -64,7 +71,7 @@ export const templates: TemplateInfo[] = [
     name: 'Executive',
     description: 'Sophisticated design for senior leadership roles',
     component: ExecutiveTemplate,
-    fields: ['finance', 'legal', 'sales', 'other'],
+    fields: ['finance', 'legal', 'sales', 'government', 'other'],
     preview: { headerColor: 'bg-slate-900', accentColor: 'bg-slate-200' },
   },
   {
@@ -97,7 +104,7 @@ export const templates: TemplateInfo[] = [
     name: 'Academic CV',
     description: 'Comprehensive format for research and academia',
     component: AcademicTemplate,
-    fields: ['education'],
+    fields: ['education', 'science'],
     preview: { headerColor: 'bg-gray-900', accentColor: 'bg-gray-100' },
   },
   {
@@ -108,6 +115,63 @@ export const templates: TemplateInfo[] = [
     fields: ['course_development', 'education'],
     popular: true,
     preview: { headerColor: 'bg-gradient-to-r from-indigo-600 to-purple-600', accentColor: 'bg-indigo-100' },
+  },
+  {
+    id: 'hr',
+    name: 'Human Resources',
+    description: 'Warm, professional template for HR and people operations',
+    component: HRTemplate,
+    fields: ['human_resources', 'sales'],
+    preview: { headerColor: 'bg-gray-700', accentColor: 'bg-yellow-200' },
+  },
+  {
+    id: 'hospitality',
+    name: 'Hospitality',
+    description: 'Elegant template for hotels, tourism, and food service',
+    component: HospitalityTemplate,
+    fields: ['hospitality'],
+    popular: true,
+    preview: { headerColor: 'bg-gradient-to-r from-yellow-800 to-yellow-600', accentColor: 'bg-yellow-100' },
+  },
+  {
+    id: 'media',
+    name: 'Media & Journalism',
+    description: 'Editorial-style layout for writers, journalists, and PR',
+    component: MediaTemplate,
+    fields: ['media', 'marketing'],
+    preview: { headerColor: 'bg-black', accentColor: 'bg-gray-100' },
+  },
+  {
+    id: 'science',
+    name: 'Science & Research',
+    description: 'Academic format optimized for researchers and scientists',
+    component: ScienceTemplate,
+    fields: ['science', 'education'],
+    preview: { headerColor: 'bg-blue-900', accentColor: 'bg-blue-50' },
+  },
+  {
+    id: 'government',
+    name: 'Government',
+    description: 'Formal template for public service and policy roles',
+    component: GovernmentTemplate,
+    fields: ['government', 'legal'],
+    preview: { headerColor: 'bg-blue-900', accentColor: 'bg-red-100' },
+  },
+  {
+    id: 'construction',
+    name: 'Construction',
+    description: 'Bold template for architecture, building, and trades',
+    component: ConstructionTemplate,
+    fields: ['construction', 'engineering'],
+    preview: { headerColor: 'bg-orange-700', accentColor: 'bg-orange-100' },
+  },
+  {
+    id: 'logistics',
+    name: 'Logistics',
+    description: 'Structured template for supply chain and operations',
+    component: LogisticsTemplate,
+    fields: ['logistics', 'engineering'],
+    preview: { headerColor: 'bg-blue-800', accentColor: 'bg-blue-100' },
   },
 ];
 
@@ -132,4 +196,11 @@ export {
   FinanceTemplate,
   AcademicTemplate,
   CourseDeveloperTemplate,
+  HRTemplate,
+  HospitalityTemplate,
+  MediaTemplate,
+  ScienceTemplate,
+  GovernmentTemplate,
+  ConstructionTemplate,
+  LogisticsTemplate,
 };
