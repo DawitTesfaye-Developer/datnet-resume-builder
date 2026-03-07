@@ -11,6 +11,13 @@ export type FieldCategory =
   | 'design'
   | 'legal'
   | 'sales'
+  | 'human_resources'
+  | 'hospitality'
+  | 'media'
+  | 'science'
+  | 'government'
+  | 'construction'
+  | 'logistics'
   | 'other';
 
 export interface PersonalInfo {
