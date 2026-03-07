@@ -150,5 +150,12 @@ export const fieldCategories: { value: FieldCategory; label: string; icon: strin
   { value: 'design', label: 'Design', icon: '🎨', description: 'UX/UI, Graphic, Product' },
   { value: 'legal', label: 'Legal', icon: '⚖️', description: 'Law, Compliance, Paralegal' },
   { value: 'sales', label: 'Sales', icon: '🤝', description: 'B2B, Retail, Account Management' },
+  { value: 'human_resources', label: 'Human Resources', icon: '👥', description: 'Recruiting, Training, People Ops' },
+  { value: 'hospitality', label: 'Hospitality', icon: '🏨', description: 'Hotels, Tourism, Food Service' },
+  { value: 'media', label: 'Media & Journalism', icon: '📰', description: 'Writing, Broadcasting, PR' },
+  { value: 'science', label: 'Science & Research', icon: '🔬', description: 'Biology, Chemistry, Physics' },
+  { value: 'government', label: 'Government', icon: '🏛️', description: 'Public Service, Policy, Admin' },
+  { value: 'construction', label: 'Construction', icon: '🏗️', description: 'Architecture, Building, Trades' },
+  { value: 'logistics', label: 'Logistics', icon: '🚛', description: 'Supply Chain, Shipping, Ops' },
   { value: 'other', label: 'Other', icon: '📋', description: 'General purpose template' },
 ];
