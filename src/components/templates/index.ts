@@ -213,4 +213,5 @@ export {
   GovernmentTemplate,
   ConstructionTemplate,
   LogisticsTemplate,
+  MarketingTemplate,
 };
