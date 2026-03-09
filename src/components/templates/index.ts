@@ -15,6 +15,7 @@ import ScienceTemplate from './ScienceTemplate';
 import GovernmentTemplate from './GovernmentTemplate';
 import ConstructionTemplate from './ConstructionTemplate';
 import LogisticsTemplate from './LogisticsTemplate';
+import MarketingTemplate from './MarketingTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
