@@ -174,6 +174,15 @@ export const templates: TemplateInfo[] = [
     fields: ['logistics', 'engineering'],
     preview: { headerColor: 'bg-blue-800', accentColor: 'bg-blue-100' },
   },
+  {
+    id: 'marketing',
+    name: 'Marketing',
+    description: 'Vibrant design with campaign highlights and social metrics',
+    component: MarketingTemplate,
+    fields: ['marketing', 'design', 'media'],
+    popular: true,
+    preview: { headerColor: 'bg-gradient-to-r from-rose-500 to-purple-500', accentColor: 'bg-pink-100' },
+  },
 ];
 
 export const getTemplateById = (id: string) => templates.find(t => t.id === id);
