@@ -184,43 +184,44 @@ const Builder = () => {
               {availableTemplates.map((template) => {
                 const isSelected = selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id);
                 return (
-                  <button
-                    key={template.id}
-                    onClick={() => setSelectedTemplateId(template.id)}
-                    className={cn(
-                      "relative rounded-xl border-2 text-left transition-all overflow-hidden group",
-                      isSelected
-                        ? "border-primary ring-2 ring-primary/20"
-                        : "border-border hover:border-primary/50"
-                    )}
-                  >
-                    {isSelected && (
-                      <div className="absolute top-2 right-2 z-10 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                        <Check className="w-3.5 h-3.5 text-primary-foreground" />
-                      </div>
-                    )}
-                    {template.popular && (
-                      <Badge className="absolute top-2 left-2 z-10 bg-warning text-warning-foreground text-[10px]">Popular</Badge>
-                    )}
-                    <div className="aspect-[3/4] bg-secondary/50 p-2">
-                      <div className="h-full bg-card rounded-lg overflow-hidden shadow-sm">
-                        <div className={`h-10 ${template.preview.headerColor}`}></div>
-                        <div className="p-2 space-y-1">
-                          <div className="h-1.5 w-12 bg-foreground/20 rounded" />
-                          <div className="h-1 w-8 bg-muted-foreground/20 rounded" />
-                          <div className="mt-2 space-y-0.5">
-                            <div className="h-1 w-full bg-muted rounded" />
-                            <div className="h-1 w-4/5 bg-muted rounded" />
-                            <div className="h-1 w-3/4 bg-muted rounded" />
+                  <TemplateHoverPreview key={template.id} template={template}>
+                    <button
+                      onClick={() => setSelectedTemplateId(template.id)}
+                      className={cn(
+                        "relative rounded-xl border-2 text-left transition-all overflow-hidden group",
+                        isSelected
+                          ? "border-primary ring-2 ring-primary/20"
+                          : "border-border hover:border-primary/50"
+                      )}
+                    >
+                      {isSelected && (
+                        <div className="absolute top-2 right-2 z-10 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                          <Check className="w-3.5 h-3.5 text-primary-foreground" />
+                        </div>
+                      )}
+                      {template.popular && (
+                        <Badge className="absolute top-2 left-2 z-10 bg-warning text-warning-foreground text-[10px]">Popular</Badge>
+                      )}
+                      <div className="aspect-[3/4] bg-secondary/50 p-2">
+                        <div className="h-full bg-card rounded-lg overflow-hidden shadow-sm">
+                          <div className={`h-10 ${template.preview.headerColor}`}></div>
+                          <div className="p-2 space-y-1">
+                            <div className="h-1.5 w-12 bg-foreground/20 rounded" />
+                            <div className="h-1 w-8 bg-muted-foreground/20 rounded" />
+                            <div className="mt-2 space-y-0.5">
+                              <div className="h-1 w-full bg-muted rounded" />
+                              <div className="h-1 w-4/5 bg-muted rounded" />
+                              <div className="h-1 w-3/4 bg-muted rounded" />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="p-3">
-                      <h3 className="font-semibold text-sm">{template.name}</h3>
-                      <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{template.description}</p>
-                    </div>
-                  </button>
+                      <div className="p-3">
+                        <h3 className="font-semibold text-sm">{template.name}</h3>
+                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{template.description}</p>
+                      </div>
+                    </button>
+                  </TemplateHoverPreview>
                 );
               })}
             </div>
