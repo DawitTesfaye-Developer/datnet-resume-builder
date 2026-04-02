@@ -16,6 +16,10 @@ import GovernmentTemplate from './GovernmentTemplate';
 import ConstructionTemplate from './ConstructionTemplate';
 import LogisticsTemplate from './LogisticsTemplate';
 import MarketingTemplate from './MarketingTemplate';
+import AfricanUnionTemplate from './AfricanUnionTemplate';
+import UnitedNationsTemplate from './UnitedNationsTemplate';
+import InternationalNGOTemplate from './InternationalNGOTemplate';
+import NationalNGOTemplate from './NationalNGOTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
@@ -183,6 +187,40 @@ export const templates: TemplateInfo[] = [
     popular: true,
     preview: { headerColor: 'bg-gradient-to-r from-rose-500 to-purple-500', accentColor: 'bg-pink-100' },
   },
+  {
+    id: 'african-union',
+    name: 'African Union',
+    description: 'Formal AU-style CV with gold/green branding for AU careers',
+    component: AfricanUnionTemplate,
+    fields: ['international_org', 'government'],
+    popular: true,
+    preview: { headerColor: 'bg-[#006B3F]', accentColor: 'bg-[#F5F0E6]' },
+  },
+  {
+    id: 'united-nations',
+    name: 'United Nations',
+    description: 'P-11/PHP-style format for UN system applications',
+    component: UnitedNationsTemplate,
+    fields: ['international_org', 'government'],
+    popular: true,
+    preview: { headerColor: 'bg-[#009EDB]', accentColor: 'bg-[#E8F4FD]' },
+  },
+  {
+    id: 'international-ngo',
+    name: 'International NGO',
+    description: 'Professional template for ICRC, MSF, Oxfam-style organizations',
+    component: InternationalNGOTemplate,
+    fields: ['international_org', 'government'],
+    preview: { headerColor: 'bg-[#0D7377]', accentColor: 'bg-teal-50' },
+  },
+  {
+    id: 'national-ngo',
+    name: 'National NGO',
+    description: 'Community-focused template for grassroots and national organizations',
+    component: NationalNGOTemplate,
+    fields: ['international_org'],
+    preview: { headerColor: 'bg-[#92400E]', accentColor: 'bg-[#FEF3C7]' },
+  },
 ];
 
 export const getTemplateById = (id: string) => templates.find(t => t.id === id);
@@ -214,4 +252,8 @@ export {
   ConstructionTemplate,
   LogisticsTemplate,
   MarketingTemplate,
+  AfricanUnionTemplate,
+  UnitedNationsTemplate,
+  InternationalNGOTemplate,
+  NationalNGOTemplate,
 };
