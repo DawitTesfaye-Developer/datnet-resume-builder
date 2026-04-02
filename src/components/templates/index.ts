@@ -16,6 +16,10 @@ import GovernmentTemplate from './GovernmentTemplate';
 import ConstructionTemplate from './ConstructionTemplate';
 import LogisticsTemplate from './LogisticsTemplate';
 import MarketingTemplate from './MarketingTemplate';
+import AfricanUnionTemplate from './AfricanUnionTemplate';
+import UnitedNationsTemplate from './UnitedNationsTemplate';
+import InternationalNGOTemplate from './InternationalNGOTemplate';
+import NationalNGOTemplate from './NationalNGOTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
