@@ -18,6 +18,7 @@ export type FieldCategory =
   | 'government'
   | 'construction'
   | 'logistics'
+  | 'international_org'
   | 'other';
 
 export interface PersonalInfo {
