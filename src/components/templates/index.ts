@@ -218,4 +218,8 @@ export {
   ConstructionTemplate,
   LogisticsTemplate,
   MarketingTemplate,
+  AfricanUnionTemplate,
+  UnitedNationsTemplate,
+  InternationalNGOTemplate,
+  NationalNGOTemplate,
 };

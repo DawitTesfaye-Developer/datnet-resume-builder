@@ -158,5 +158,6 @@ export const fieldCategories: { value: FieldCategory; label: string; icon: strin
   { value: 'government', label: 'Government', icon: '🏛️', description: 'Public Service, Policy, Admin' },
   { value: 'construction', label: 'Construction', icon: '🏗️', description: 'Architecture, Building, Trades' },
   { value: 'logistics', label: 'Logistics', icon: '🚛', description: 'Supply Chain, Shipping, Ops' },
+  { value: 'international_org', label: 'International Organizations', icon: '🌍', description: 'UN, AU, NGOs, Multilateral' },
   { value: 'other', label: 'Other', icon: '📋', description: 'General purpose template' },
 ];
