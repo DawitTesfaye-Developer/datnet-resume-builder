@@ -20,6 +20,7 @@ import AfricanUnionTemplate from './AfricanUnionTemplate';
 import UnitedNationsTemplate from './UnitedNationsTemplate';
 import InternationalNGOTemplate from './InternationalNGOTemplate';
 import NationalNGOTemplate from './NationalNGOTemplate';
+import ATSTemplate from './ATSTemplate';
 import { FieldCategory, ResumeData } from '@/types/resume';
 import { ComponentType } from 'react';
 
@@ -221,6 +222,15 @@ export const templates: TemplateInfo[] = [
     fields: ['international_org'],
     preview: { headerColor: 'bg-[#92400E]', accentColor: 'bg-[#FEF3C7]' },
   },
+  {
+    id: 'ats-optimized',
+    name: 'ATS Optimized',
+    description: 'Plain text layout with zero graphics — maximum ATS compatibility',
+    component: ATSTemplate,
+    fields: ['technology', 'finance', 'legal', 'sales', 'human_resources', 'engineering', 'other'],
+    popular: true,
+    preview: { headerColor: 'bg-gray-900', accentColor: 'bg-white' },
+  },
 ];
 
 export const getTemplateById = (id: string) => templates.find(t => t.id === id);
@@ -256,4 +266,5 @@ export {
   UnitedNationsTemplate,
   InternationalNGOTemplate,
   NationalNGOTemplate,
+  ATSTemplate,
 };
