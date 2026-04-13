@@ -432,6 +432,15 @@ const Builder = () => {
       {/* Print Styles */}
       <style>{`
         @media print {
+          @page {
+            size: letter;
+            margin: 0;
+          }
+          html, body {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
           body * {
             visibility: hidden;
           }
@@ -443,6 +452,10 @@ const Builder = () => {
             left: 0;
             top: 0;
             width: 100%;
+          }
+          /* Remove shadows and borders for clean print */
+          .print\\:block [class*="shadow"] {
+            box-shadow: none !important;
           }
         }
       `}</style>
