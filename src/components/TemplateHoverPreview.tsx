@@ -3,7 +3,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/h
 import { TemplateInfo } from '@/components/templates';
 import { ResumeData } from '@/types/resume';
 
-const sampleResumeData: ResumeData = {
+export const sampleResumeData: ResumeData = {
   documentType: 'resume',
   fieldCategory: 'technology',
   personalInfo: {
