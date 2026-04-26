@@ -28,6 +28,7 @@ import AiReviewDialog from '@/components/AiReviewDialog';
 import AiCoverLetterDialog from '@/components/AiCoverLetterDialog';
 import AiAutoFillDialog from '@/components/AiAutoFillDialog';
 import TemplateHoverPreview, { sampleResumeData } from '@/components/TemplateHoverPreview';
+import AtsCompatibilityIndicator from '@/components/AtsCompatibilityIndicator';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
