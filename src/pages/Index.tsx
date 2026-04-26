@@ -240,10 +240,10 @@ const Index = () => {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <FileText className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold">ResumeForge</span>
+              <span className="font-semibold">Datnet Resume</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 ResumeForge. Build professional resumes for free.
+              © 2026 Datnet Resume. Build professional resumes for free.
             </p>
           </div>
         </div>
