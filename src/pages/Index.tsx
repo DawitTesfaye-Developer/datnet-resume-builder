@@ -188,7 +188,7 @@ const Index = () => {
       <section className="py-20 bg-secondary/30">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose ResumeForge?</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose Datnet Resume?</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Everything you need to create a winning resume
             </p>
