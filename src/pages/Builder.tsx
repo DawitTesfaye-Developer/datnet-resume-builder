@@ -27,7 +27,7 @@ import AiAssistantDialog from '@/components/AiAssistantDialog';
 import AiReviewDialog from '@/components/AiReviewDialog';
 import AiCoverLetterDialog from '@/components/AiCoverLetterDialog';
 import AiAutoFillDialog from '@/components/AiAutoFillDialog';
-import TemplateHoverPreview from '@/components/TemplateHoverPreview';
+import TemplateHoverPreview, { sampleResumeData } from '@/components/TemplateHoverPreview';
 
 const steps = [
   { id: 1, name: 'Document Type', shortName: 'Type' },
@@ -173,19 +173,22 @@ const Builder = () => {
             }}
           />
         );
-      case 3:
+      case 3: {
+        const PreviewTemplate = currentTemplate.component;
         return (
           <div className="space-y-6">
             <div className="text-center">
               <h2 className="text-2xl font-semibold mb-2">Choose a Template</h2>
-              <p className="text-muted-foreground">Pick the layout that best fits your style</p>
+              <p className="text-muted-foreground">Click any template to see a live full-size preview instantly</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-              {availableTemplates.map((template) => {
-                const isSelected = selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id);
-                return (
-                  <TemplateHoverPreview key={template.id} template={template}>
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,420px)_1fr] gap-6">
+              {/* Template list */}
+              <div className="grid grid-cols-2 gap-3 content-start max-h-[calc(100vh-260px)] overflow-y-auto pr-2">
+                {availableTemplates.map((template) => {
+                  const isSelected = selectedTemplateId === template.id || (!selectedTemplateId && template.id === currentTemplate.id);
+                  return (
                     <button
+                      key={template.id}
                       onClick={() => setSelectedTemplateId(template.id)}
                       className={cn(
                         "relative rounded-xl border-2 text-left transition-all overflow-hidden group",
@@ -216,17 +219,40 @@ const Builder = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="p-3">
+                      <div className="p-2.5">
                         <h3 className="font-semibold text-sm">{template.name}</h3>
                         <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{template.description}</p>
                       </div>
                     </button>
-                  </TemplateHoverPreview>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Live full preview */}
+              <div className="lg:sticky lg:top-24 self-start">
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <h3 className="text-base font-semibold">{currentTemplate.name}</h3>
+                    <p className="text-xs text-muted-foreground">Live preview with sample data</p>
+                  </div>
+                  <Badge variant="secondary">Preview</Badge>
+                </div>
+                <div className="relative w-full overflow-hidden rounded-xl border border-border bg-white shadow-lg" style={{ height: 'calc(100vh - 280px)', minHeight: '600px' }}>
+                  <div
+                    className="origin-top-left absolute"
+                    style={{
+                      transform: 'scale(0.72)',
+                      width: '139%',
+                    }}
+                  >
+                    <PreviewTemplate data={sampleResumeData} />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         );
+      }
       case 4:
         return <PersonalInfoForm />;
       case 5:
