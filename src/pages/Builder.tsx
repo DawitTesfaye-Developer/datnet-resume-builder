@@ -229,15 +229,16 @@ const Builder = () => {
               </div>
 
               {/* Live full preview */}
-              <div className="lg:sticky lg:top-24 self-start">
-                <div className="flex items-center justify-between mb-3">
+              <div className="lg:sticky lg:top-24 self-start space-y-3">
+                <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-base font-semibold">{currentTemplate.name}</h3>
                     <p className="text-xs text-muted-foreground">Live preview with sample data</p>
                   </div>
                   <Badge variant="secondary">Preview</Badge>
                 </div>
-                <div className="relative w-full overflow-hidden rounded-xl border border-border bg-white shadow-lg" style={{ height: 'calc(100vh - 280px)', minHeight: '600px' }}>
+                <AtsCompatibilityIndicator templateId={currentTemplate.id} />
+                <div className="relative w-full overflow-hidden rounded-xl border border-border bg-white shadow-lg" style={{ height: 'calc(100vh - 380px)', minHeight: '500px' }}>
                   <div
                     className="origin-top-left absolute"
                     style={{
