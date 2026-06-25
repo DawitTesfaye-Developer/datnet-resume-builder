@@ -188,7 +188,7 @@ const Index = () => {
       <section className="py-20 bg-secondary/30">
         <div className="section-container">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Datnet Resume?</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose ResumeForge?</h2>
             <p className="text-muted-foreground max-w-xl mx-auto">
               Everything you need to create a winning resume
             </p>
@@ -240,10 +240,10 @@ const Index = () => {
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                 <FileText className="w-4 h-4 text-primary-foreground" />
               </div>
-              <span className="font-semibold">Datnet Resume</span>
+              <span className="font-semibold">ResumeForge</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 Datnet Resume. Build professional resumes for free.
+              © 2026 ResumeForge. Build professional resumes for free.
             </p>
           </div>
         </div>

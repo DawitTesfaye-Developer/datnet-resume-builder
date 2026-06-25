@@ -25,7 +25,7 @@ const Header = () => {
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logo} alt="Datnet Resume" className="h-10 w-auto" />
+            <img src={logo} alt="DaWit.dev" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
