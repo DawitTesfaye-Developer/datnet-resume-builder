@@ -241,3 +241,4 @@ export const useResume = () => {
   if (context === undefined) throw new Error('useResume must be used within a ResumeProvider');
   return context;
 };
+</parameter>
