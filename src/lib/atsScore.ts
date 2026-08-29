@@ -22,7 +22,7 @@ const ACTION_VERBS = [
 
 const ATS_UNSAFE_TEMPLATES = ['creative', 'media', 'marketing'];
 
-export function computeAtsScore(data: ResumeData): AtsReport {
+export function computeAtsScore(data: ResumeData, templateId?: string): AtsReport {
   const { personalInfo, experiences, education, skills, certifications, projects } = data;
 
   const allText = [
@@ -128,7 +128,7 @@ export function computeAtsScore(data: ResumeData): AtsReport {
     {
       id: 'template',
       label: 'ATS-friendly template selected',
-      passed: !ATS_UNSAFE_TEMPLATES.includes(data.template),
+      passed: !templateId || !ATS_UNSAFE_TEMPLATES.includes(templateId),
       weight: 10,
       hint: 'Highly graphical templates can confuse parsers. Choose "ATS Optimized", Professional or Minimal in Step 3.',
     },

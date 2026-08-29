@@ -284,7 +284,7 @@ const Builder = () => {
               <div className="flex items-center gap-2">
                 <AiAssistantDialog />
                 <AiReviewDialog />
-                <AtsScoreDialog />
+                <AtsScoreDialog templateId={currentTemplate.id} />
                 <AiCoverLetterDialog />
                 <AiAutoFillDialog />
               </div>

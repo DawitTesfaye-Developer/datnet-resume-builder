@@ -7,12 +7,12 @@ import { useResume } from '@/context/ResumeContext';
 import { computeAtsScore } from '@/lib/atsScore';
 import { ShieldCheck, CheckCircle2, Circle, Copy, Check } from 'lucide-react';
 
-const AtsScoreDialog = () => {
+const AtsScoreDialog = ({ templateId }: { templateId?: string }) => {
   const { resumeData } = useResume();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const report = useMemo(() => computeAtsScore(resumeData), [resumeData]);
+  const report = useMemo(() => computeAtsScore(resumeData, templateId), [resumeData, templateId]);
   const failed = report.checks.filter((c) => !c.passed);
   const passed = report.checks.filter((c) => c.passed);
 
