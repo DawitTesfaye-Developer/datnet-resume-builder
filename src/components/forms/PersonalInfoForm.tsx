@@ -281,4 +281,3 @@ const PersonalInfoForm = () => {
 };
 
 export default PersonalInfoForm;
-</parameter>

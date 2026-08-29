@@ -91,4 +91,3 @@ const TestScoresForm = () => {
 };
 
 export default TestScoresForm;
-</parameter>
