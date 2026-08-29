@@ -97,4 +97,3 @@ const CoursesForm = () => {
 };
 
 export default CoursesForm;
-</parameter>

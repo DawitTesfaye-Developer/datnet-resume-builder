@@ -135,4 +135,3 @@ const CustomSectionForm = () => {
 };
 
 export default CustomSectionForm;
-</parameter>

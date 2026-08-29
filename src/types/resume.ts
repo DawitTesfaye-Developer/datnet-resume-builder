@@ -486,4 +486,3 @@ export const fieldCategories: { value: FieldCategory; label: string; icon: strin
 
   { value: 'other', label: 'Other / General', icon: '📋', description: 'General purpose template', group: 'Other' },
 ];
-</parameter>

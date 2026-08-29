@@ -128,4 +128,3 @@ const BlogPostsForm = () => {
 };
 
 export default BlogPostsForm;
-</parameter>

@@ -127,4 +127,3 @@ const FieldSelector = ({ selected, onSelect }: FieldSelectorProps) => {
 };
 
 export default FieldSelector;
-</parameter>

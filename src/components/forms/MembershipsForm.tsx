@@ -94,4 +94,3 @@ const MembershipsForm = () => {
 };
 
 export default MembershipsForm;
-</parameter>
