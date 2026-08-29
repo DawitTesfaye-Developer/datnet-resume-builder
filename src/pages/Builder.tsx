@@ -34,6 +34,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import AiAssistantDialog from '@/components/AiAssistantDialog';
 import AiReviewDialog from '@/components/AiReviewDialog';
 import AiCoverLetterDialog from '@/components/AiCoverLetterDialog';
+import AtsScoreDialog from '@/components/AtsScoreDialog';
 import AiAutoFillDialog from '@/components/AiAutoFillDialog';
 import TemplateHoverPreview from '@/components/TemplateHoverPreview';
 
@@ -283,6 +284,7 @@ const Builder = () => {
               <div className="flex items-center gap-2">
                 <AiAssistantDialog />
                 <AiReviewDialog />
+                <AtsScoreDialog templateId={currentTemplate.id} />
                 <AiCoverLetterDialog />
                 <AiAutoFillDialog />
               </div>
