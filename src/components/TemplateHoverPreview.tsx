@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { TemplateInfo } from '@/components/templates';
-import { ResumeData } from '@/types/resume';
+import { ResumeData, defaultResumeData } from '@/types/resume';
 
 const sampleResumeData: ResumeData = {
+  ...defaultResumeData,
   documentType: 'resume',
   fieldCategory: 'technology',
   personalInfo: {
